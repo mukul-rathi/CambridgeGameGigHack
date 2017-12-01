@@ -10,7 +10,7 @@ function love.load()
 
 	-- Difficulty rating (0 to 1) DIFFICULTY GOES UP EXPONENTIALLY!
 	-- Increase means increase in speed
-	difficulty = 0.04
+	difficulty = 0.02
 	difficultyIncrease = 0.5
 
 	-- Cave Height to control bouncing
@@ -141,7 +141,7 @@ function love.draw()
 	--love.graphics.print(#balls, 20, 10)
 	if gameover then
 		love.graphics.setFont(fonts.gameover)
-		love.graphics.print("gameover", 10, 200)
+		love.graphics.print("gameover", 10, 150)
 	end
 end
 
@@ -160,6 +160,8 @@ function love.keypressed(key)
 			if player.y < cave.bottom - images.ball:getHeight() - antiStick then
 				player.y = player.y + player.jump
 			end
+		elseif key == "space" then
+			createNewBullet()
 		end
 	end
 
