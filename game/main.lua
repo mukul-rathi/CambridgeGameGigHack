@@ -31,9 +31,9 @@ function love.load()
 
 	images = {}
 	images.background = love.graphics.newImage("assets/ground.png")
-	images.ball = love.graphics.newImage("assets/coin.png")
-	images.player = love.graphics.newImage("assets/player_down.png")
-	images.bullet = love.graphics.newImage("assets/bullet.png")
+	images.ball = love.graphics.newImage("assets/goomba.png")
+	images.player = love.graphics.newImage("assets/retromario.png")
+	images.bullet = love.graphics.newImage("assets/retrofireball.png")
 	
 	player = {}	
 	player.x = 50
