@@ -20,6 +20,9 @@ function love.load()
 	cave.bottom = love.graphics.getHeight() - 150
 	cave.left = 50
 
+	-- Bullets left
+	bullets_left = 10
+
 	-- Added new score
 	score = 0
 
@@ -27,6 +30,7 @@ function love.load()
 
 	fonts = {}
 	fonts.score = love.graphics.newFont("assets/Gamer.ttf",36)
+	fonts.teaser = love.graphics.newFont("assets/Gamer.ttf",50)
 	fonts.gameover = love.graphics.newFont("assets/Gamer.ttf", 250)
 
 	images = {}
@@ -90,7 +94,11 @@ function love.draw()
 	end
 	
 	love.graphics.setFont(fonts.score)
-	love.graphics.print("Score: " .. score, 10, 10)
+	love.graphics.print("Score: " .. score, 10, 60)
+	love.graphics.print("Bullets: " .. bullets_left, 410, 60)
+
+	love.graphics.setFont(fonts.teaser)
+	love.graphics.print("CAN YOU BEAT 40?", 10, 0)
 	--love.graphics.print(#balls, 20, 10)
 	if gameover then
 		love.graphics.setFont(fonts.gameover)
@@ -110,7 +118,7 @@ function love.keypressed(key)
 				player.y = player.y - player.jump
 			end
 		elseif key == "down" then
-			if player.y < cave.bottom - images.ball:getHeight() - antiStick then
+			if player.y < cave.bottom - images.player:getHeight() - antiStick then
 				player.y = player.y + player.jump
 			end
 		elseif key == "space" then

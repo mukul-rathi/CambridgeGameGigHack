@@ -1,13 +1,20 @@
 function createNewBullet()
-	local bullet = {}
-	--initial properties
-	bullet.x = player.x + player.w
-	bullet.y = player.y + player.h/2
-	bullet.xspeed = 10
-	bullet.w = images.bullet:getWidth()
-	bullet.h = images.bullet:getHeight()
-	
-	table.insert(bullets,bullet)
+
+	if bullets_left > 0 then
+
+		bullets_left = bullets_left - 1
+
+		local bullet = {}
+		--initial properties
+		bullet.x = player.x + player.w
+		bullet.y = player.y + player.h/2
+		bullet.xspeed = 10
+		bullet.w = images.bullet:getWidth()
+		bullet.h = images.bullet:getHeight()
+		
+		table.insert(bullets,bullet)
+
+	end
 end	
 function checkBulletHit()
 	for i = #bullets, 1, -1 do
