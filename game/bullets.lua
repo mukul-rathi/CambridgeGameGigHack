@@ -27,9 +27,16 @@ function checkBulletHit()
 			for j=#balls, 1, -1 do
 				local ball = balls[j]
 				--check if bullet hits ball
-				if AABB(bullet.x, bullet.y, bullet.w, bullet.h, ball.x , ball.y , init_ball.width , init_ball.height) then
+				if AABB(bullet.x, bullet.y, bullet.w, bullet.h, ball.x , ball.y , ball.width , ball.height) then
 				table.remove(bullets,i)
-				table.remove(balls,j)
+				if ball.size == "small" then
+					table.remove(balls,j)
+				elseif balls.size == "medium" then
+					ball.size = "small"
+				else
+					ball.size = "medium"
+
+				end
 				score = score + 1 
 			end
 		end

@@ -35,7 +35,12 @@ function love.load()
 
 	images = {}
 	images.background = love.graphics.newImage("assets/ground.png")
-	images.ball = love.graphics.newImage("assets/goomba.png")
+	--different sizes
+	images.ball_large = love.graphics.newImage("assets/goomba_large.png")
+	images.ball_medium = love.graphics.newImage("assets/goomba_medium.png")
+	images.ball_small = love.graphics.newImage("assets/goomba.png")
+	
+
 	images.player = love.graphics.newImage("assets/retromario.png")
 	images.bullet = love.graphics.newImage("assets/retrofireball.png")
 	
@@ -46,11 +51,8 @@ function love.load()
 	player.h = images.player:getHeight()
 	player.jump = images.player:getHeight()
 
-	-- Each ball's Initial properties - init_ball
-	init_ball = {}
-	init_ball.width = images.ball:getWidth()
-	init_ball.height = images.ball:getWidth()
-	init_ball.speed = 5
+	
+
 	
 	bullets = {}
 end
@@ -60,9 +62,16 @@ function love.update(dt)
 	if gameover == true then
 		return
 	end
-
-	if math.random() < difficulty then
-		createBall()
+	local rand= math.random()
+	if  rand < difficulty/20 then
+		createBall("large")
+		images.ball = images.ball_large
+	elseif rand < difficulty/4 then
+		createBall("medium")
+		images.ball = images.ball_medium
+	elseif rand < difficulty then
+		createBall("small")
+		images.ball = images.ball_small
 	end
 	
 	
@@ -85,6 +94,13 @@ function love.draw()
 	-- Balls
 	for i=1, #balls, 1 do
 		local ball = balls[i]
+		if ball.size=="small" then
+			images.ball = images.ball_small
+		elseif ball.size=="medium" then
+			images.ball = images.ball_medium
+		else 
+			images.ball = images.ball_large
+		end
 		love.graphics.draw(images.ball, ball.x, ball.y)
 	end
 	-- Bullets

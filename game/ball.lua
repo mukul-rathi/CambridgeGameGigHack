@@ -1,10 +1,26 @@
-function createBall()
+function createBall(size)
 	local ball = {}
 	-- Initial Properties
+	ball.width = images.ball_small:getWidth()
+	ball.height = images.ball_small:getHeight()
+	ball.speed = 1
+	ball.size = "small" --default size
+
+	if size=="large" then
+		ball.speed = ball.speed/5;
+		ball.size = "large"
+		ball.width = images.ball_large:getWidth()
+		ball.height = images.ball_large:getWidth()
+	elseif size=="medium" then
+		ball.speed = ball.speed/2
+		ball.size = "medium"
+		ball.width = images.ball_medium:getWidth()
+		ball.height = images.ball_medium:getWidth()
+	end
 	ball.x = love.graphics.getWidth() - 50
-	ball.y = math.random(cave.top, cave.bottom - images.ball:getHeight())
-	ball.sx = 0 - init_ball.speed
-	ball.sy = init_ball.speed
+	ball.y = math.random(cave.top, cave.bottom -ball.height)
+	ball.sx = 0 - ball.speed
+	ball.sy = ball.speed
 
 	table.insert(balls, ball)
 end
@@ -14,7 +30,7 @@ function ballMotion()
 	for i=#balls, 1, -1 do
 		local ball = balls[i]
 
-		if AABB(player.x, player.y, player.w, player.h, ball.x , ball.y , init_ball.width , init_ball.height) then
+		if AABB(player.x, player.y, player.w, player.h, ball.x , ball.y , ball.width , ball.height) then
 			-- Player has collided, dead.
 			gameover = true
 			return
@@ -31,7 +47,7 @@ function ballMotion()
 				-- If collision, change y speed by reversing
 				ball.sy = 0 - ball.sy
 
-				init_ball.speed = init_ball.speed + difficultyIncrease
+				ball.speed = ball.speed + difficultyIncrease
 			end
 			-- END MODIFY BALL SPEED HERE
 
