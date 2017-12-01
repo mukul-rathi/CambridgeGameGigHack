@@ -78,7 +78,7 @@ function love.update(dt)
 		createAmmo()
 	end
 
-	if math.random() < 0.0005 then
+	if math.random() < 0.001 then
 		createStar()
 	end
 	
@@ -127,7 +127,7 @@ function love.draw()
 
 	for i=1, #stars, 1 do
 		local star = stars[i]
-		love.graphics.draw(images.flower, star.x, star.y)
+		love.graphics.draw(images.star, star.x, star.y)
 	end
 	
 	love.graphics.setFont(fonts.score)
