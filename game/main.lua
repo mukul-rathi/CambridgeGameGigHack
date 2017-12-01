@@ -62,55 +62,8 @@ function love.update(dt)
 	end
 	
 	
-	-- Iterate through balls
-	for i=#balls, 1, -1 do
-		local ball = balls[i]
-
-		if AABB(player.x, player.y, player.w, player.h, ball.x , ball.y , init_ball.width , init_ball.height) then
-			-- Player has collided, dead.
-			gameover = true
-			return
-		end
-
-		if ball.x < cave.left then
-			-- ball has ended
-			table.remove(balls, i)
-			score = score + 1
-		else
-			
-			-- MODIFY BALL SPEED HERE --
-			if ball.y < cave.top or ball.y > cave.bottom - images.ball:getHeight() then
-				-- If collision, change y speed by reversing
-				ball.sy = 0 - ball.sy
-
-				init_ball.speed = init_ball.speed + difficultyIncrease
-			end
-			-- END MODIFY BALL SPEED HERE
-
-			-- Move ball
-			ball.x = ball.x + ball.sx
-			ball.y = ball.y + ball.sy
-		end
-	end
-	-- Iterate through bullets
-	for i = #bullets, 1, -1 do
-		local bullet = bullets[i]
-		bullet.x = bullet.x + bullet.xspeed
-		--gone off screen
-		if bullet.x > love.graphics.getWidth() then
-			table.remove(bullets,i)
-		else
-			for j=#balls, 1, -1 do
-				local ball = balls[j]
-				--check if bullet hits ball
-				if AABB(bullet.x, bullet.y, bullet.w, bullet.h, ball.x , ball.y , init_ball.width , init_ball.height) then
-				table.remove(bullets,i)
-				table.remove(balls,j)
-				score = score + 1 
-			end
-		end
-	end
-
+	ballMotion()
+	checkBulletHit()
 end
 end
 function love.draw()
