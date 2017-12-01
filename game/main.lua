@@ -1,4 +1,5 @@
 require "collision"
+require "ball"
 
 function love.load()
 	math.randomseed(os.time())
@@ -14,9 +15,10 @@ function love.load()
 	cave.left = 50
 
 	-- Ball properties
-	ballWidth = 20
-	ballHeight = 20
-	ballSpeed = 5
+	ball = {}
+	ball.width = 20
+	ball.height = 20
+	ball.speed = 5
 
 	player = {}	
 	player.x = 50
@@ -37,16 +39,7 @@ function love.load()
 	
 end
 
-function createBall()
-	local ball = {}
-	-- Initial Properties
-	ball.x = love.graphics.getWidth() - 50
-	ball.y = math.random(cave.top, cave.bottom - 50)-- how to get image height to replace the 50?
-	ball.sx = 0 - ballSpeed
-	ball.sy = ballSpeed
 
-	table.insert(balls, ball)
-end
 
 function love.update(dt)
 
@@ -58,21 +51,13 @@ function love.update(dt)
 		createBall()
 	end
 
-	if love.keyboard.isDown("up") then
-		if player.y > cave.top then
-			player.y = player.y - player.jump
-		end
-	elseif love.keyboard.isDown("down") then
-		if player.y < cave.bottom then
-			player.y = player.y + player.jump
-		end
-	end
+	
 	
 	-- Iterate through balls
 	for i=#balls, 1, -1 do
 		local ball = balls[i]
 
-		if AABB(player.x, player.y, player.w, player.h, ball.x , ball.y , ballWidth , ballHeight) then
+		if AABB(player.x, player.y, player.w, player.h, ball.x , ball.y , ball.width , ball.height) then
 			-- Player has collided, dead.
 			gameover = true
 			return
@@ -122,5 +107,18 @@ function love.draw()
 		love.graphics.print("gameover", 10, 200)
 	end
 
+
+end
+
+function love.keypressed(key)
+if key == "up" then
+		if player.y > cave.top then
+			player.y = player.y - player.jump
+		end
+	elseif key == "down" then
+		if player.y < cave.bottom then
+			player.y = player.y + player.jump
+		end
+	end
 
 end
