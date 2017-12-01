@@ -1,6 +1,7 @@
 require "collision"
 require "ball"
 require "bullets"
+require "Powerup"
 
 function love.load()
 	math.randomseed(os.time())
@@ -43,6 +44,8 @@ function love.load()
 
 	images.player = love.graphics.newImage("assets/retromario.png")
 	images.bullet = love.graphics.newImage("assets/retrofireball.png")
+	images.flower = love.graphics.newImage("assets/flower.png")
+	images.star = love.graphics.newImage("assets/star.png")
 	
 	player = {}	
 	player.x = 50
@@ -71,9 +74,20 @@ function love.update(dt)
 		images.ball = images.ball_small
 	end
 	
+	if math.random() < 0.001 then
+		createAmmo()
+	end
+
+	if math.random() < 0.0005 then
+		createStar()
+	end
 	
 	ballMotion()
+	ammoMotion()
+	starMotion()
 	checkBulletHit()
+	
+
 
 end
 function love.draw()
@@ -104,6 +118,16 @@ function love.draw()
 	for i=1, #bullets, 1 do
 		local bullet = bullets[i]
 		love.graphics.draw(images.bullet, bullet.x, bullet.y)
+	end
+
+	for i=1, #ammos, 1 do
+		local ammo = ammos[i]
+		love.graphics.draw(images.flower, ammo.x, ammo.y)
+	end
+
+	for i=1, #stars, 1 do
+		local star = stars[i]
+		love.graphics.draw(images.flower, star.x, star.y)
 	end
 	
 	love.graphics.setFont(fonts.score)

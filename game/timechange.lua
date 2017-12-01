@@ -1,3 +1,7 @@
+require "main"
+require "ball"
+require "Powerup"
+require "bullets"
 require "getTime"
 
 function speedUp()
@@ -30,7 +34,7 @@ function speedUp()
 		ammo.sx = ammo.sx * 2
 	end
 	
-	for p = #stars, 1, -1 do
+	for o = #stars, 1, -1 do
 		local star = stars[i]
 		star.sx = star.sx * 2
 	end
@@ -66,7 +70,7 @@ function slowDown()
 		ammo.sx = ammo.sx / 2
 	end
 	
-	for p = #stars, 1, -1 do
+	for o = #stars, 1, -1 do
 		local star = stars[i]
 		star.sx = star.sx / 2
 	end
@@ -101,7 +105,7 @@ function normalizeFast()
 		ammo.sx = ammo.sx / 2
 	end
 	
-	for p = #stars, 1, -1 do
+	for o = #stars, 1, -1 do
 		local star = stars[i]
 		star.sx = star.sx / 2
 	end
@@ -136,7 +140,7 @@ function normalizeSlow()
 		ammo.sx = ammo.sx * 2
 	end
 	
-	for p = #stars, 1, -1 do
+	for o = #stars, 1, -1 do
 		local star = stars[i]
 		star.sx = star.sx * 2
 	end
