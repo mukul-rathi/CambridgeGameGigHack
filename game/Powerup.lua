@@ -31,7 +31,7 @@ function ammoMotion()
 
 		if AABB(player.x, player.y, player.w, player.h, ammo.x , ammo.y , ammo.width , ammo.height) then
 			-- reset ammo
-			bullets_left = 10
+			bullets_left = 25
 			table.remove(ammos, i)		
 		end
 

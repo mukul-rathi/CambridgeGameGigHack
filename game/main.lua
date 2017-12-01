@@ -23,7 +23,7 @@ function love.load()
 	cave.left = 50
 
 	-- Bullets left
-	bullets_left = 10
+	bullets_left = 25
 
 	-- Added new score
 	score = 0
