@@ -146,19 +146,28 @@ function love.draw()
 end
 
 function love.keypressed(key)
-
+	
 	-- Add an 'anti-sticking' measure to prevent players sticking to the top or bottom
 	antiStick = 30
 
-	if key == "up" then
-		if player.y > cave.top + antiStick then
-			player.y = player.y - player.jump
+	-- if not gameover then move
+	if not gameover then
+		if key == "up" then
+			if player.y > cave.top + antiStick then
+				player.y = player.y - player.jump
+			end
+		elseif key == "down" then
+			if player.y < cave.bottom - images.ball:getHeight() - antiStick then
+				player.y = player.y + player.jump
+			end
 		end
-	elseif key == "down" then
-		if player.y < cave.bottom - images.ball:getHeight() - antiStick then
-			player.y = player.y + player.jump
-		end
-	elseif key == "space" then
-		createNewBullet()
 	end
+
+	-- could use 'else' here, but this is clearer
+	if gameover then
+		if key == "r" then
+			love.load()
+		end
+	end
+
 end
