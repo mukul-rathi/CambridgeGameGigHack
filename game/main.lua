@@ -17,7 +17,7 @@ function love.load()
 	cave = {}
 
 	cave.top = 100
-	cave.bottom = love.graphics.getHeight() - 150
+	cave.bottom = love.graphics.getHeight() - 100
 	cave.left = 50
 
 	-- Bullets left
@@ -46,7 +46,7 @@ function love.load()
 	
 	player = {}	
 	player.x = 50
-	player.y = 210
+	player.y = 218
 	player.w = images.player:getWidth()
 	player.h = images.player:getHeight()
 	player.jump = images.player:getHeight()
