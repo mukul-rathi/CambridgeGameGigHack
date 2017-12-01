@@ -1,5 +1,6 @@
 require "collision"
 require "ball"
+require "bullets"
 
 function love.load()
 	math.randomseed(os.time())
@@ -32,6 +33,7 @@ function love.load()
 	images.background = love.graphics.newImage("assets/ground.png")
 	images.ball = love.graphics.newImage("assets/coin.png")
 	images.player = love.graphics.newImage("assets/player_down.png")
+	images.bullet = love.graphics.newImage("assets/bullet.png")
 	
 	player = {}	
 	player.x = 50
@@ -45,9 +47,9 @@ function love.load()
 	init_ball.width = images.ball:getWidth()
 	init_ball.height = images.ball:getWidth()
 	init_ball.speed = 5
+	
+	bullets = {}
 end
-
-
 
 function love.update(dt)
 
@@ -90,9 +92,27 @@ function love.update(dt)
 			ball.y = ball.y + ball.sy
 		end
 	end
+	-- Iterate through bullets
+	for i = #bullets, 1, -1 do
+		local bullet = bullets[i]
+		bullet.x = bullet.x + bullet.xspeed
+		--gone off screen
+		if bullet.x > love.graphics.getWidth() then
+			table.remove(bullets,i)
+		else
+			for j=#balls, 1, -1 do
+				local ball = balls[j]
+				--check if bullet hits ball
+				if AABB(bullet.x, bullet.y, bullet.w, bullet.h, ball.x , ball.y , init_ball.width , init_ball.height) then
+				table.remove(bullets,i)
+				table.remove(balls,j)
+				score = score + 1 
+			end
+		end
+	end
 
 end
-
+end
 function love.draw()
 
 	-- Background
@@ -110,6 +130,11 @@ function love.draw()
 		local ball = balls[i]
 		love.graphics.draw(images.ball, ball.x, ball.y)
 	end
+	-- Bullets
+	for i=1, #bullets, 1 do
+		local bullet = bullets[i]
+		love.graphics.draw(images.bullet, bullet.x, bullet.y)
+	end
 	
 	love.graphics.setFont(fonts.score)
 	love.graphics.print("Score: " .. score, 10, 10)
@@ -118,8 +143,6 @@ function love.draw()
 		love.graphics.setFont(fonts.gameover)
 		love.graphics.print("gameover", 10, 200)
 	end
-
-
 end
 
 function love.keypressed(key)
@@ -135,6 +158,7 @@ function love.keypressed(key)
 		if player.y < cave.bottom - images.ball:getHeight() - antiStick then
 			player.y = player.y + player.jump
 		end
+	elseif key == "space" then
+		createNewBullet()
 	end
-
 end
