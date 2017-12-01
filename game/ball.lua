@@ -3,11 +3,11 @@ function createBall(size)
 	-- Initial Properties
 	ball.width = images.ball_small:getWidth()
 	ball.height = images.ball_small:getHeight()
-	ball.speed = 1
+	ball.speed = 3
 	ball.size = "small" --default size
 
 	if size=="large" then
-		ball.speed = ball.speed/5;
+		ball.speed = ball.speed/4;
 		ball.size = "large"
 		ball.width = images.ball_large:getWidth()
 		ball.height = images.ball_large:getWidth()
@@ -43,7 +43,7 @@ function ballMotion()
 		else
 			
 			-- MODIFY BALL SPEED HERE --
-			if ball.y < cave.top or ball.y > cave.bottom - images.ball:getHeight() then
+			if ball.y < cave.top or ball.y > cave.bottom - ball.height then
 				-- If collision, change y speed by reversing
 				ball.sy = 0 - ball.sy
 
