@@ -64,7 +64,7 @@ function love.update(dt)
 	
 	ballMotion()
 	checkBulletHit()
-end
+
 end
 function love.draw()
 
