@@ -188,6 +188,7 @@ function love.keypressed(key)
 	if gameover then
 		if key == "r" then
 			love.load()
+			gameStarted = true
 		end
 	end
 end
