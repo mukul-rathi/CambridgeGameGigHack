@@ -1,7 +1,3 @@
-require "main"
-require "ball"
-require "Powerup"
-require "bullets"
 require "getTime"
 
 function speedUp()
