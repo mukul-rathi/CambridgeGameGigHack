@@ -31,10 +31,10 @@ function checkBulletHit()
 				table.remove(bullets,i)
 				if ball.size == "small" then
 					table.remove(balls,j)
-				elseif balls.size == "medium" then
-					ball.size = "small"
+				elseif ball.size == "medium" then
+					balls[j].size = "small"
 				else
-					ball.size = "medium"
+					balls[j].size = "medium"
 
 				end
 				score = score + 1 

@@ -63,12 +63,9 @@ function love.update(dt)
 		return
 	end
 	local rand= math.random()
-	if  rand < difficulty/20 then
+	if  rand < difficulty/10 then
 		createBall("large")
 		images.ball = images.ball_large
-	elseif rand < difficulty/4 then
-		createBall("medium")
-		images.ball = images.ball_medium
 	elseif rand < difficulty then
 		createBall("small")
 		images.ball = images.ball_small
