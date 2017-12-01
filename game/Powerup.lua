@@ -1,4 +1,6 @@
 require "collision"
+require "timechange"
+require "getTime"
 
 function Powerupinit()
     rockets = {}
@@ -13,8 +15,8 @@ function createAmmos(v)
 	ammo.height = 50
     ammo.x = love.graphics.getWidth() - 50
 	ammo.y = math.random(cave.top, cave.bottom - 50)
-	ammo.sx = -math.random(0,v)
-	ammo.sy = math.random(0,v)
+	ammo.sx = -math.random(1,v)
+	ammo.sy = math.random(1,v)
 	table.insert(ammos, ammo)
 end
 
@@ -24,8 +26,8 @@ function createStar(v)
 	star.height = 50
     star.x = love.graphics.getWidth() - 50
 	star.y = math.random(cave.top, cave.bottom - 50)
-	star.sx = -math.random(0,v)
-	star.sy = math.random(0,v)
+	star.sx = -math.random(1,v)
+	star.sy = math.random(1,v)
 	table.insert(stars, star)
 end
 
@@ -35,8 +37,8 @@ function createRocket(v)
 	rocket.height = 50
     rocket.x = love.graphics.getWidth() - 50
 	rocket.y = math.random(cave.top, cave.bottom - 50)
-	rocket.sx = -math.random(0,v)
-	rocket.sy = math.random(0,v)
+	rocket.sx = -math.random(1,v)
+	rocket.sy = math.random(1,v)
 	table.insert(rockets, rocket)
 end
 
@@ -46,8 +48,8 @@ function createChrono(v)
 	chrono.height = 50
 	chrono.x = love.graphics.getWidth() - 50
 	chrono.y = math.random(cave.top, cave.bottom - 50)
-	chrono.sx = -math.random(0,v)
-	chrono.sy = math.random(0,v)
+	chrono.sx = -math.random(1,v)
+	chrono.sy = math.random(1,v)
 	table.insert(chronos, chrono)
 end
 
@@ -57,8 +59,12 @@ function Rocketmotion()
 
 		if AABB(player.x, player.y, player.w, player.h, rocket.x , rocket.y , rocket.width , rocket.height) then
 			-- speed up everything!
-			
 			table.remove(rockets, i)
+			local currenttime = getTime()
+			speedUp();
+			if currenttime>initFastTimer+5 and timeChanged then
+			    normalizeFast() 
+			end
 		end
 
 		if rocket.x < cave.left then
@@ -82,7 +88,12 @@ function Chronomotion()
 
 		if AABB(player.x, player.y, player.w, player.h, chrono.x , chrono.y , chrono.width , chrono.height) then
 			-- slow everything down
-			table.remove(chronos, i)		
+			table.remove(chronos, i)
+            local currenttime = getTime()
+			slowDown();
+			if currenttime>initSlowTimer+5 then
+			    normalizeSlow() 
+			end			
 		end
 
 		if chrono.x < cave.left then
@@ -105,8 +116,8 @@ function Ammomotion()
 		local ammo = ammos[i]
 
 		if AABB(player.x, player.y, player.w, player.h, ammo.x , ammo.y , ammo.width , ammo.height) then
-			-- slow everything down
-			table.remove(ammo, i)		
+			table.remove(ammos, i)
+            bullets_left = bullets_left + 10
 		end
 
 		if ammo.x < cave.left then
@@ -129,8 +140,10 @@ function Starmotion()
 		local star = stars[i]
 
 		if AABB(player.x, player.y, player.w, player.h, star.x , star.y , star.width , star.height) then
-			-- slow everything down
-			table.remove(star, i)		
+			table.remove(stars, i)		
+			--invicible = invicible + 1
+			score = score + 10
+			
 		end
 
 		if star.x < cave.left then
